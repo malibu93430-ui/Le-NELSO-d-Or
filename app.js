@@ -120,7 +120,6 @@ document.getElementById("incident-form").addEventListener("submit", async functi
     
     document.getElementById("input-contexte").value = "";
     
-    // Attente de 1 seconde pour l'écriture Google Sheets avant de recharger
     setTimeout(async function () {
       await loadData();
       document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
