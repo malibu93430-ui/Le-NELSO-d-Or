@@ -2,6 +2,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwqn313sKP6NIa4plrwoji8
 
 let globalBareme = [];
 
+// Navigation et chargement initial
 document.addEventListener("DOMContentLoaded", function () {
   const navButtons = document.querySelectorAll('.nav-btn');
   
@@ -20,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
   loadData();
 });
 
+// Récupération des données depuis Google Sheets
 async function loadData() {
   try {
     const response = await fetch(API_URL);
@@ -36,6 +38,7 @@ async function loadData() {
   }
 }
 
+// Affichage du premier au classement
 function displayLeader(leader) {
   if (!leader) return;
   document.getElementById("leader-name").textContent = leader.nom;
@@ -43,6 +46,7 @@ function displayLeader(leader) {
   document.getElementById("leader-incidents").textContent = leader.incidents + " incident(s)";
 }
 
+// Affichage de la liste complète
 function displayRanking(participants) {
   const list = document.getElementById("ranking-list");
   list.innerHTML = "";
@@ -53,6 +57,7 @@ function displayRanking(participants) {
   });
 }
 
+// Affichage des règles du barème
 function displayRules(bareme) {
   const list = document.getElementById("rules-list");
   list.innerHTML = "";
@@ -63,6 +68,7 @@ function displayRules(bareme) {
   });
 }
 
+// Injection des données dans le formulaire
 function populateForm(participants, bareme) {
   const selectPart = document.getElementById("select-participant");
   const selectAct = document.getElementById("select-action");
@@ -85,6 +91,7 @@ function populateForm(participants, bareme) {
   });
 }
 
+// Soumission du formulaire de craquage
 document.getElementById("incident-form").addEventListener("submit", async function (e) {
   e.preventDefault();
   const btn = document.getElementById("btn-submit");
@@ -106,40 +113,15 @@ document.getElementById("incident-form").addEventListener("submit", async functi
   try {
     await fetch(API_URL, {
       method: "POST",
-      body: JSON.stringify(payload)
-    });
-    
-   // Soumission du formulaire de craquage
-document.getElementById("incident-form").addEventListener("submit", async function (e) {
-  e.preventDefault();
-  const btn = document.getElementById("btn-submit");
-  btn.disabled = true;
-  btn.textContent = "Enregistrement...";
-
-  const participant = document.getElementById("select-participant").value;
-  const actionName = document.getElementById("select-action").value;
-  const contexte = document.getElementById("input-contexte").value;
-  const actionObj = globalBareme.find(function (b) { return b.action === actionName; });
-
-  const payload = {
-    participant: participant,
-    action: actionName,
-    points: actionObj ? actionObj.points : 0,
-    contexte: contexte
-  };
-
-  try {
-    await fetch(API_URL, {
-      method: "POST",
-      mode: "no-cors", // Évite les blocages de sécurité CORS sur mobile/Safari
+      mode: "no-cors",
       headers: { "Content-Type": "text/plain" },
       body: JSON.stringify(payload)
     });
     
     document.getElementById("input-contexte").value = "";
     
-    // Petite pause de 1 seconde pour laisser le temps à Google Sheet d'écrire la ligne
-    setTimeout(async () => {
+    // Attente de 1 seconde pour l'écriture Google Sheets avant de recharger
+    setTimeout(async function () {
       await loadData();
       document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
       document.querySelectorAll('.nav-btn').forEach(function (b) { b.classList.remove('active'); });
