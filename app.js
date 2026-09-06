@@ -2,7 +2,7 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwqn313sKP6NIa4plrwoji8
 
 let globalBareme = [];
 
-// Gestion du changement de page via JS
+// Navigation et chargement initial
 document.addEventListener("DOMContentLoaded", () => {
   const navButtons = document.querySelectorAll('.nav-btn');
   
@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadData();
 });
 
+// Récupération des données depuis Google Sheets
 async function loadData() {
   try {
     const response = await fetch(API_URL);
@@ -37,6 +38,7 @@ async function loadData() {
   }
 }
 
+// Affichage du premier au classement
 function displayLeader(leader) {
   if (!leader) return;
   document.getElementById("leader-name").textContent = leader.nom;
@@ -44,6 +46,7 @@ function displayLeader(leader) {
   document.getElementById("leader-incidents").textContent = `${leader.incidents} incident(s)`;
 }
 
+// Affichage de la liste complète
 function displayRanking(participants) {
   const list = document.getElementById("ranking-list");
   list.innerHTML = "";
@@ -54,6 +57,7 @@ function displayRanking(participants) {
   });
 }
 
+// Affichage des règles du barème
 function displayRules(bareme) {
   const list = document.getElementById("rules-list");
   list.innerHTML = "";
@@ -64,6 +68,7 @@ function displayRules(bareme) {
   });
 }
 
+// Injection des données dans le formulaire
 function populateForm(participants, bareme) {
   const selectPart = document.getElementById("select-participant");
   const selectAct = document.getElementById("select-action");
@@ -86,6 +91,7 @@ function populateForm(participants, bareme) {
   });
 }
 
+// Soumission d'un craquage
 document.getElementById("incident-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const btn = document.getElementById("btn-submit");
@@ -113,13 +119,13 @@ document.getElementById("incident-form").addEventListener("submit", async (e) =>
     document.getElementById("input-contexte").value = "";
     await loadData();
     
-    // Retour à l'accueil
+    // Redirection automatique vers le classement
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     document.getElementById('page-home').classList.add('active');
     document.querySelector('[data-page="home"]').classList.add('active');
   } catch (err) {
-    console.error("Erreur :", err);
+    console.error("Erreur lors de l'envoi :", err);
   } finally {
     btn.disabled = false;
     btn.textContent = "Valider l'incident";
