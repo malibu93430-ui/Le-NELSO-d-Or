@@ -2,13 +2,24 @@ const API_URL = https://script.google.com/macros/s/AKfycbwqn313sKP6NIa4plrwoji80
 
 let globalBareme = [];
 
-function showPage(pageId) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+// Gestion du changement de page via JS
+document.addEventListener("DOMContentLoaded", () => {
+  const navButtons = document.querySelectorAll('.nav-btn');
   
-  document.getElementById(`page-${pageId}`).classList.add('active');
-  event.target.classList.add('active');
-}
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const pageId = e.target.getAttribute('data-page');
+      
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      
+      document.getElementById(`page-${pageId}`).classList.add('active');
+      e.target.classList.add('active');
+    });
+  });
+
+  loadData();
+});
 
 async function loadData() {
   try {
@@ -36,7 +47,7 @@ function displayLeader(leader) {
 function displayRanking(participants) {
   const list = document.getElementById("ranking-list");
   list.innerHTML = "";
-  participants.forEach((p, idx) => {
+  participants.forEach((p) => {
     const li = document.createElement("li");
     li.innerHTML = `<strong>${p.nom}</strong> <span>${p.score} pts (${p.incidents} inc.)</span>`;
     list.appendChild(li);
@@ -101,7 +112,12 @@ document.getElementById("incident-form").addEventListener("submit", async (e) =>
     
     document.getElementById("input-contexte").value = "";
     await loadData();
-    showPage('home');
+    
+    // Retour à l'accueil
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-home').classList.add('active');
+    document.querySelector('[data-page="home"]').classList.add('active');
   } catch (err) {
     console.error("Erreur :", err);
   } finally {
@@ -109,5 +125,3 @@ document.getElementById("incident-form").addEventListener("submit", async (e) =>
     btn.textContent = "Valider l'incident";
   }
 });
-
-loadData();
