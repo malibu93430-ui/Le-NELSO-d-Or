@@ -20,7 +20,8 @@
     <nav>
       <button class="nav-btn active" data-page="home">📊 Classement</button>
       <button class="nav-btn" data-page="add">⚡ Craquage</button>
-      <button class="nav-btn" data-page="rules">📜 Barème</button>
+      <button class="nav-btn" data-page="bareme">📜 Barème</button>
+      <button class="nav-btn" data-page="rules">⚠️ Règles</button>
     </nav>
   </header>
 
@@ -60,10 +61,31 @@
     </div>
 
     <!-- PAGE 3 : BARÈME -->
-    <div id="page-rules" class="page">
+    <div id="page-bareme" class="page">
       <section class="section-box">
         <h2>📜 Barème officiel des points</h2>
         <ul id="rules-list" class="rules-list"></ul>
+      </section>
+    </div>
+
+    <!-- PAGE 4 : DISCLAIMER & RÈGLES DU JEU -->
+    <div id="page-rules" class="page">
+      <section class="card-box card-disclaimer">
+        <h2 class="title-disclaimer">Disclaimer</h2>
+        <p>Ce jeu a pour but d'évacuer les frustrations. En aucun cas il ne doit devenir une cause de provocation envers un tiers ou avoir une incidence sur le professionnalisme des participants.</p>
+        <p class="highlight-blue">On est juste là pour compter les sorties de piste en réunion !</p>
+      </section>
+
+      <section class="card-box card-rules">
+        <h2 class="title-rules">Les règles</h2>
+        <ul class="custom-bullet-list">
+          <li>Les points sont comptabilisés par niveau, du soupir au craquage, de 0,5 à 5 points.</li>
+          <li>Un point est validé s'il est déclaré par un témoin (participant).</li>
+          <li>Les débriefs, débats et litiges auront lieu sur le chan <strong>« Nomination pour le N.E.L.S.O. d'or »</strong>.</li>
+          <li>En cas de litige sur l'attribution d'un point, un vote sera effectué sur le chan.</li>
+          <li>La voix des absents de la réunion comptera double (pour compenser le fait d'avoir raté l'action).</li>
+          <li>La VAR et les CR Gemini pourront être utilisés pour influencer les absents lors des votes.</li>
+        </ul>
       </section>
     </div>
   </main>
