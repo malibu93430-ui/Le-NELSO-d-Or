@@ -111,64 +111,63 @@ button[type="submit"] {
   margin-top: 10px;
 }
 
-/* Encadrés Noirs avec Texte Blanc pour la page Règles */
-.rule-card {
-  background-color: #000000;
-  color: #ffffff;
+/* --- PAGE RÈGLES : ENCADRÉS NOIRS ET TEXTES --- */
+
+#page-rules .rule-card {
+  background-color: #000000 !important;
+  color: #ffffff !important;
   border-radius: 16px;
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
 }
 
-.card-disclaimer {
-  border: 2px solid #ef4444;
+#page-rules .card-disclaimer {
+  border: 2px solid #ef4444 !important;
 }
 
-.card-rules {
-  border: 2px solid #38bdf8;
+#page-rules .card-rules {
+  border: 2px solid #38bdf8 !important;
 }
 
-.title-disclaimer {
-  color: #ef4444;
-  font-weight: bold;
+#page-rules h2.title-disclaimer {
+  color: #ef4444 !important;
+  font-weight: bold !important;
   font-size: 1.8rem;
   margin-top: 0;
   margin-bottom: 12px;
 }
 
-.title-rules {
-  color: #38bdf8;
-  font-weight: bold;
+#page-rules h2.title-rules {
+  color: #38bdf8 !important;
+  font-weight: bold !important;
   font-size: 1.8rem;
   margin-top: 0;
   margin-bottom: 12px;
 }
 
-.rule-card p {
-  color: #ffffff;
+#page-rules p, 
+#page-rules li {
+  color: #ffffff !important;
   line-height: 1.5;
-  margin: 8px 0;
 }
 
-.highlight-blue {
+#page-rules .highlight-blue {
   color: #38bdf8 !important;
   font-weight: bold;
   margin-top: 15px;
 }
 
-.custom-bullet-list {
+#page-rules .custom-bullet-list {
   list-style-type: disc;
   padding-left: 20px;
   margin: 0;
 }
 
-.custom-bullet-list li {
-  color: #ffffff;
+#page-rules .custom-bullet-list li {
   margin-bottom: 12px;
-  line-height: 1.4;
 }
 
-.custom-bullet-list li strong {
-  color: #38bdf8;
+#page-rules .custom-bullet-list li strong {
+  color: #38bdf8 !important;
 }
