@@ -1,4 +1,4 @@
-const API_URL = https://script.google.com/macros/s/AKfycbwqn313sKP6NIa4plrwoji80VXttBtNy2gI0o3FS75fDa1j5NOJuYE-AuMrEqLLASFg/exec;
+const API_URL = "https://script.google.com/macros/s/AKfycbwqn313sKP6NIa4plrwoji80VXttBtNy2gI0o3FS75fDa1j5NOJuYE-AuMrEqLLASFg/exec";
 
 let globalBareme = [];
 
