@@ -2,18 +2,17 @@ const API_URL = "https://script.google.com/macros/s/AKfycbwqn313sKP6NIa4plrwoji8
 
 let globalBareme = [];
 
-// Navigation et chargement initial
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
   const navButtons = document.querySelectorAll('.nav-btn');
   
-  navButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  navButtons.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
       const pageId = e.target.getAttribute('data-page');
       
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
+      document.querySelectorAll('.nav-btn').forEach(function (b) { b.classList.remove('active'); });
       
-      document.getElementById(`page-${pageId}`).classList.add('active');
+      document.getElementById('page-' + pageId).classList.add('active');
       e.target.classList.add('active');
     });
   });
@@ -21,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadData();
 });
 
-// Récupération des données depuis Google Sheets
 async function loadData() {
   try {
     const response = await fetch(API_URL);
@@ -38,37 +36,33 @@ async function loadData() {
   }
 }
 
-// Affichage du premier au classement
 function displayLeader(leader) {
   if (!leader) return;
   document.getElementById("leader-name").textContent = leader.nom;
   document.getElementById("leader-score").textContent = leader.score;
-  document.getElementById("leader-incidents").textContent = `${leader.incidents} incident(s)`;
+  document.getElementById("leader-incidents").textContent = leader.incidents + " incident(s)";
 }
 
-// Affichage de la liste complète
 function displayRanking(participants) {
   const list = document.getElementById("ranking-list");
   list.innerHTML = "";
-  participants.forEach((p) => {
+  participants.forEach(function (p) {
     const li = document.createElement("li");
-    li.innerHTML = `<strong>${p.nom}</strong> <span>${p.score} pts (${p.incidents} inc.)</span>`;
+    li.innerHTML = "<strong>" + p.nom + "</strong> <span>" + p.score + " pts (" + p.incidents + " inc.)</span>";
     list.appendChild(li);
   });
 }
 
-// Affichage des règles du barème
 function displayRules(bareme) {
   const list = document.getElementById("rules-list");
   list.innerHTML = "";
-  bareme.forEach(b => {
+  bareme.forEach(function (b) {
     const li = document.createElement("li");
-    li.innerHTML = `<span>${b.action}</span> <strong>+${b.points} pt(s)</strong>`;
+    li.innerHTML = "<span>" + b.action + "</span> <strong>+" + b.points + " pt(s)</strong>";
     list.appendChild(li);
   });
 }
 
-// Injection des données dans le formulaire
 function populateForm(participants, bareme) {
   const selectPart = document.getElementById("select-participant");
   const selectAct = document.getElementById("select-action");
@@ -76,23 +70,22 @@ function populateForm(participants, bareme) {
   selectPart.innerHTML = "";
   selectAct.innerHTML = "";
 
-  participants.forEach(p => {
+  participants.forEach(function (p) {
     const opt = document.createElement("option");
     opt.value = p.nom;
     opt.textContent = p.nom;
     selectPart.appendChild(opt);
   });
 
-  bareme.forEach(b => {
+  bareme.forEach(function (b) {
     const opt = document.createElement("option");
     opt.value = b.action;
-    opt.textContent = `${b.action} (+${b.points} pts)`;
+    opt.textContent = b.action + " (+" + b.points + " pts)";
     selectAct.appendChild(opt);
   });
 }
 
-// Soumission d'un craquage
-document.getElementById("incident-form").addEventListener("submit", async (e) => {
+document.getElementById("incident-form").addEventListener("submit", async function (e) {
   e.preventDefault();
   const btn = document.getElementById("btn-submit");
   btn.disabled = true;
@@ -101,7 +94,7 @@ document.getElementById("incident-form").addEventListener("submit", async (e) =>
   const participant = document.getElementById("select-participant").value;
   const actionName = document.getElementById("select-action").value;
   const contexte = document.getElementById("input-contexte").value;
-  const actionObj = globalBareme.find(b => b.action === actionName);
+  const actionObj = globalBareme.find(function (b) { return b.action === actionName; });
 
   const payload = {
     participant: participant,
@@ -119,9 +112,8 @@ document.getElementById("incident-form").addEventListener("submit", async (e) =>
     document.getElementById("input-contexte").value = "";
     await loadData();
     
-    // Redirection automatique vers le classement
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
+    document.querySelectorAll('.nav-btn').forEach(function (b) { b.classList.remove('active'); });
     document.getElementById('page-home').classList.add('active');
     document.querySelector('[data-page="home"]').classList.add('active');
   } catch (err) {
